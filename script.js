@@ -25,7 +25,7 @@ let cart = []
 // pagination with scroll
 function scrollPagination(){
     const pageNumber = Math.ceil(listItems.length / amountItemPerPage)
-    // when scroll at the end appear new item
+    // when scroll at the end call displayItem
     if (Math.ceil(docElm.scrollTop) + docElm.clientHeight > docElm.scrollHeight - 5) {
         if (currentPage < pageNumber){
             currentPage ++
@@ -35,7 +35,10 @@ function scrollPagination(){
 }
 
 function displayItems (){
+    // create fragment for temporary storage new element
+    const fragment = document.createDocumentFragment()
 
+    // display the items in listItem according currentPage number
     let temporaryList = listItems.slice((currentPage -1) * amountItemPerPage , currentPage * amountItemPerPage)
     temporaryList.forEach((product) =>{
         const newDiv = document.createElement("div")
@@ -50,8 +53,9 @@ function displayItems (){
                  data-id='${product.id}'>
                      Add To Cart
              </button>`
-        mainElm.append(newDiv)
+        fragment.append(newDiv)
     })
+    mainElm.append(fragment)
 }
 
 function clickAddCartBtn(event){
